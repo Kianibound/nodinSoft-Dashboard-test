@@ -1,17 +1,12 @@
-import AppBar from "./appBar/AppBar";
-import DashBoard from "./dashboard/DashBoard";
-import Profile from "./profile/Profile";
-import Todos from "./todos/Todos";
-import Weather from "./weather/Weather";
+import AppBar from "./appBar/Bar";
+
+import VerticalTabs from "./tabPanel/Panel";
 
 const Main = () => {
   return (
     <>
       <AppBar />
-      <DashBoard />
-      <Todos />
-      <Weather />
-      <Profile />
+      <VerticalTabs />
     </>
   );
 };

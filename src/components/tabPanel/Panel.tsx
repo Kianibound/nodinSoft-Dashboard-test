@@ -21,7 +21,7 @@ function TabPanel(props: TabPanelProps) {
     <Box
       justifyContent={"center"}
       alignItems={"center"}
-      sx={{ width: "100%", backgroundColor: "red" }}
+      sx={{ width: "100%", backgroundColor: "white" }}
       role="tabpanel"
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}

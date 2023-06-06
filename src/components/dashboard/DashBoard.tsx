@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 
 // localStorage.getItem('name') || ''
 const DashBoard = () => {
-  const [name, setName] = useState<string>("Ehsan");
+  //get name from local storage
+  const [name, setName] = useState<string | null>(null);
   const [timeOfDay, setTimeOfDay] = useState<string>("");
   const [exactTime, setExactTime] = useState<string>("");
 
@@ -14,6 +15,12 @@ const DashBoard = () => {
       const hour = now.getHours();
       const minute = now.getMinutes();
       const second = now.getSeconds();
+
+      //get name from local storage
+      const storedName = window.localStorage.getItem("username");
+      if (storedName) {
+        setName(storedName);
+      }
 
       let newTimeOfDay: string = "";
       if (hour >= 5 && hour < 12) {

@@ -1,11 +1,11 @@
-import { CenterFocusStrong } from "@mui/icons-material";
-import { Box, Paper, Typography } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import { Paper, Typography } from "@mui/material";
+import { useState, useEffect, useContext } from "react";
+import { ThemeContext } from "../../utils/ThemeProvider";
 
-// localStorage.getItem('name') || ''
 const DashBoard = () => {
-  //get name from local storage
-  const [name, setName] = useState<string | null>(null);
+  const { theme } = useContext(ThemeContext);
+
+  const [name, setName] = useState<string>("");
   const [timeOfDay, setTimeOfDay] = useState<string>("");
   const [exactTime, setExactTime] = useState<string>("");
 
@@ -16,7 +16,6 @@ const DashBoard = () => {
       const minute = now.getMinutes();
       const second = now.getSeconds();
 
-      //get name from local storage
       const storedName = window.localStorage.getItem("username");
       if (storedName) {
         setName(storedName);
@@ -43,11 +42,23 @@ const DashBoard = () => {
   }, []);
 
   return (
-    <Paper elevation={3} sx={{ p: 3, width: 800 }}>
+    <Paper
+      elevation={3}
+      sx={{
+        p: 3,
+        width: 800,
+        backgroundColor: theme === "light" ? "white" : "#292828",
+        color: theme === "light" ? "black" : "white",
+      }}
+    >
       <Typography
         textAlign={"center"}
+        sx={{ color: theme === "light" ? "black" : "white" }}
       >{`Good ${timeOfDay}, ${name}!`}</Typography>
-      <Typography textAlign={"center"}>{`${exactTime}`}</Typography>
+      <Typography
+        textAlign={"center"}
+        sx={{ color: theme === "light" ? "black" : "white" }}
+      >{`${exactTime}`}</Typography>
     </Paper>
   );
 };

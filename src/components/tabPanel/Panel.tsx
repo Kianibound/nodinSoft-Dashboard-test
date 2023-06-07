@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -7,6 +7,7 @@ import DashBoard from "../dashboard/DashBoard";
 import Todos from "../todos/Todos";
 import Weather from "../weather/Weather";
 import Profile from "../profile/Profile";
+import { ThemeContext } from "../../utils/ThemeProvider";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -17,11 +18,17 @@ interface TabPanelProps {
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
+  const { theme } = useContext(ThemeContext);
+
   return (
     <Box
       justifyContent={"center"}
       alignItems={"center"}
-      sx={{ width: "100%", backgroundColor: "white" }}
+      sx={{
+        width: "100%",
+        backgroundColor: theme === "light" ? "white" : "black",
+        color: theme === "light" ? "black" : "white",
+      }}
       role="tabpanel"
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
@@ -50,6 +57,7 @@ export default function VerticalTabs() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  const { theme } = useContext(ThemeContext);
 
   return (
     <Box
@@ -60,6 +68,8 @@ export default function VerticalTabs() {
         height: "90vh",
         width: "100%",
         border: "1px solid blue",
+        backgroundColor: theme === "light" ? "white" : "#292828",
+        color: theme === "light" ? "black" : "white",
       }}
     >
       <Tabs
@@ -67,12 +77,34 @@ export default function VerticalTabs() {
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs"
-        sx={{ borderRight: 1, borderColor: "divider", borderBottom: 1 }}
+        sx={{
+          borderRight: 1,
+          borderColor: "divider",
+          borderBottom: 1,
+          backgroundColor: theme === "light" ? "white" : "#292828",
+          color: theme === "light" ? "black" : "white",
+        }}
       >
-        <Tab label="Dashoard" {...a11yProps(0)} />
-        <Tab label="Todos" {...a11yProps(1)} />
-        <Tab label="Weather" {...a11yProps(2)} />
-        <Tab label="Profile" {...a11yProps(3)} />
+        <Tab
+          label="Dashoard"
+          {...a11yProps(0)}
+          sx={{ color: theme === "light" ? "black" : "white" }}
+        />
+        <Tab
+          label="Todos"
+          {...a11yProps(1)}
+          sx={{ color: theme === "light" ? "black" : "white" }}
+        />
+        <Tab
+          label="Weather"
+          {...a11yProps(2)}
+          sx={{ color: theme === "light" ? "black" : "white" }}
+        />
+        <Tab
+          label="Profile"
+          {...a11yProps(3)}
+          sx={{ color: theme === "light" ? "black" : "white" }}
+        />
       </Tabs>
       <TabPanel value={value} index={0}>
         <DashBoard />

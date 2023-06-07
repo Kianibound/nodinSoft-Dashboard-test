@@ -1,10 +1,15 @@
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect, Suspense, useContext } from "react";
 import { TextField, Button, Box } from "@mui/material";
 import "./App.css";
 import Main from "./components/Main";
+import { ThemeProvider, ThemeContext } from "./utils/ThemeProvider";
+import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
+import { PaletteMode } from "@mui/material";
 
 function App() {
   const [username, setUsername] = useState<string | null>(null);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const storedUsername = window.localStorage.getItem("username");
@@ -12,6 +17,12 @@ function App() {
       setUsername(storedUsername);
     }
   }, []);
+
+  const muitheme = createTheme({
+    palette: {
+      mode: theme as PaletteMode,
+    },
+  });
 
   const handleUsernameSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,7 +36,11 @@ function App() {
     <>
       {username ? (
         <Suspense fallback={<div>Loading...</div>}>
-          <Main />
+          <ThemeProvider>
+            <MuiThemeProvider theme={muitheme}>
+              <Main />
+            </MuiThemeProvider>
+          </ThemeProvider>
         </Suspense>
       ) : (
         <Box sx={{ maxWidth: "400px", margin: "0 auto" }}>

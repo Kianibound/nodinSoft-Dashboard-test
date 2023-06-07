@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from "react";
 import {
   List,
   ListItem,
@@ -7,8 +7,9 @@ import {
   IconButton,
   Checkbox,
   TextField,
-} from '@mui/material';
-import { Delete, Edit } from '@mui/icons-material';
+} from "@mui/material";
+import { Delete, Edit } from "@mui/icons-material";
+import { ThemeContext } from "../../utils/ThemeProvider";
 
 interface Todo {
   id: string;
@@ -24,7 +25,8 @@ interface TodoListProps {
 
 function TodoList({ todos, onDeleteTodo, onEditTodo }: TodoListProps) {
   const [editTodoId, setEditTodoId] = useState<string | null>(null);
-  const [editTodoText, setEditTodoText] = useState('');
+  const [editTodoText, setEditTodoText] = useState("");
+  const { theme } = useContext(ThemeContext);
 
   const handleEditTodoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEditTodoText(event.target.value);
@@ -32,7 +34,7 @@ function TodoList({ todos, onDeleteTodo, onEditTodo }: TodoListProps) {
 
   const handleEditTodoCancel = () => {
     setEditTodoId(null);
-    setEditTodoText('');
+    setEditTodoText("");
   };
 
   const handleEditTodoSubmit = () => {
@@ -41,7 +43,8 @@ function TodoList({ todos, onDeleteTodo, onEditTodo }: TodoListProps) {
     const editedTodo = {
       id: editTodoId,
       text: editTodoText,
-      completed: todos.find((todo) => todo.id === editTodoId)?.completed ?? false,
+      completed:
+        todos.find((todo) => todo.id === editTodoId)?.completed ?? false,
     };
 
     if (onEditTodo) {
@@ -49,13 +52,24 @@ function TodoList({ todos, onDeleteTodo, onEditTodo }: TodoListProps) {
     }
 
     setEditTodoId(null);
-    setEditTodoText('');
+    setEditTodoText("");
   };
 
   return (
-    <List>
+    <List
+      sx={{
+        backgroundColor: theme === "light" ? "white" : "#292828",
+        color: theme === "light" ? "black" : "white",
+      }}
+    >
       {todos.map((todo) => (
-        <ListItem key={todo.id}>
+        <ListItem
+          key={todo.id}
+          sx={{
+            backgroundColor: theme === "light" ? "white" : "#292828",
+            color: theme === "light" ? "black" : "white",
+          }}
+        >
           {todo.id === editTodoId ? (
             <>
               <TextField
@@ -64,12 +78,28 @@ function TodoList({ todos, onDeleteTodo, onEditTodo }: TodoListProps) {
                 label="Edit Todo"
                 value={editTodoText}
                 onChange={handleEditTodoChange}
+                sx={{
+                  backgroundColor: theme === "light" ? "white" : "#292828",
+                  color: theme === "light" ? "black" : "white",
+                }}
               />
               <ListItemSecondaryAction>
-                <IconButton onClick={handleEditTodoCancel}>
+                <IconButton
+                  onClick={handleEditTodoCancel}
+                  sx={{
+                    backgroundColor: theme === "light" ? "white" : "#292828",
+                    color: theme === "light" ? "black" : "white",
+                  }}
+                >
                   <Delete />
                 </IconButton>
-                <IconButton onClick={handleEditTodoSubmit}>
+                <IconButton
+                  onClick={handleEditTodoSubmit}
+                  sx={{
+                    backgroundColor: theme === "light" ? "white" : "#292828",
+                    color: theme === "light" ? "black" : "white",
+                  }}
+                >
                   <Edit />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -86,14 +116,33 @@ function TodoList({ todos, onDeleteTodo, onEditTodo }: TodoListProps) {
                     });
                   }
                 }}
+                sx={{
+                  backgroundColor: theme === "light" ? "white" : "#292828",
+                  color: theme === "light" ? "black" : "white",
+                }}
               />
               <ListItemText
                 primary={todo.text}
-                style={todo.completed ? { textDecoration: 'line-through' } : undefined}
+                style={
+                  todo.completed
+                    ? { textDecoration: "line-through" }
+                    : undefined
+                }
+                sx={{
+                  backgroundColor: theme === "light" ? "white" : "#292828",
+                  color: theme === "light" ? "black" : "white",
+                }}
               />
               <ListItemSecondaryAction>
                 {onDeleteTodo && (
-                  <IconButton onClick={() => onDeleteTodo?.(todo.id)} aria-label="delete">
+                  <IconButton
+                    onClick={() => onDeleteTodo?.(todo.id)}
+                    aria-label="delete"
+                    sx={{
+                      backgroundColor: theme === "light" ? "white" : "#292828",
+                      color: theme === "light" ? "black" : "white",
+                    }}
+                  >
                     <Delete />
                   </IconButton>
                 )}
@@ -103,6 +152,10 @@ function TodoList({ todos, onDeleteTodo, onEditTodo }: TodoListProps) {
                     setEditTodoText(todo.text);
                   }}
                   aria-label="edit"
+                  sx={{
+                    backgroundColor: theme === "light" ? "white" : "#292828",
+                    color: theme === "light" ? "black" : "white",
+                  }}
                 >
                   <Edit />
                 </IconButton>
